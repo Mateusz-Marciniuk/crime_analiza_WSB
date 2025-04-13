@@ -2,7 +2,7 @@
 Skład: Mateusz Marciniuk, Krzysztof Sadło, Wojciech Szostak
 Opis: Analiza śmiertelnych zabójstw w Indiach w latach 2020-2024 
 Szczegoły : w trakcie pracy nad projektem
-
+Data set: https://www.kaggle.com/datasets/sudhanvahg/indian-crimes-dataset
 
 
 ## Analiza według miast, płci, użytych bronii, wieku ofiar
