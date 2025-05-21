@@ -88,21 +88,66 @@ combined = pd.concat([combined, pd.DataFrame(pred)], ignore_index=True)
 
 # Wykres przestępstw 2020–2025
 pivot = combined.pivot(index='City', columns='Rok', values='Na100k')
+pivot.columns = pivot.columns.astype(int)  # Upewniamy się, że kolumny to int
+
 plt.figure(figsize=(14, 8))
 x = np.arange(len(pivot.index))
 width = 0.15
-lata = ['2020', '2021', '2022', '2023', '2024', '2025']
+lata = [2020, 2021, 2022, 2023, 2024, 2025]  # Liczby, nie stringi
 
 for i, rok in enumerate(lata):
-    r_int = int(rok)
-    if r_int in pivot.columns:
-        plt.bar(x + i*width, pivot[r_int], width=width, label=rok)
+    if rok in pivot.columns:
+        plt.bar(x + i * width, pivot[rok], width=width, label=str(rok))
 
-plt.xticks(x + width * len(lata)/2, pivot.index, rotation=45)
+plt.xticks(x + width * len(lata) / 2, pivot.index, rotation=45)
 plt.title('Przestępstwa na 100k mieszkańców (2020–2025)')
 plt.xlabel('Miasto')
 plt.ylabel('Na 100 000 mieszkańców')
 plt.legend(title='Rok')
 plt.tight_layout()
 plt.grid(True, axis='y')
+plt.show()
+
+#wykres trendu przestępstw w czasie
+df['YearMonth'] = df['Date of Occurrence'].dt.to_period('M')
+trend = df['YearMonth'].value_counts().sort_index()
+
+trend.plot(kind='line', figsize=(12, 5), marker='o', title='Liczba przestępstw w czasie')
+plt.xlabel('Rok-Miesiąc')
+plt.ylabel('Liczba przestępstw')
+plt.tight_layout()
+plt.show()
+
+
+#Mapa cieplna – przestępstwa według miast i lat
+heatmap = combined.pivot_table(index='City', columns='Rok', values='Na100k')
+plt.figure(figsize=(12, 8))
+sns.heatmap(heatmap, annot=True, fmt='.1f', cmap='OrRd')
+plt.title('Przestępstwa na 100k – miasta vs lata')
+plt.tight_layout()
+plt.show()
+
+#boxplot czasu zamkniecia spraw wedlug typu przestepstwa
+filtered = df[(df['Czas'] >= 0) & (df['Crime Description'].isin(top_crimes['Typ']))]
+plt.figure(figsize=(14, 6))
+sns.boxplot(data=filtered, x='Crime Description', y='Czas', palette='coolwarm')
+plt.xticks(rotation=45)
+plt.title('Czas zamknięcia sprawy wg typu przestępstwa')
+plt.tight_layout()
+plt.show()
+
+# stosunek męzczyzni vs kobiety dla każdego przestępstwa
+pivot_gender = pd.crosstab(df['Crime Description'], df['Victim Gender'])
+pivot_gender = pivot_gender.loc[top_crimes['Typ']]
+pivot_gender.plot(kind='barh', stacked=True, figsize=(10, 6), colormap='Pastel1')
+plt.title('Płeć ofiar wg rodzaju przestępstwa')
+plt.tight_layout()
+plt.show()
+ 
+ #czas zamkniecia sprawy w zaleznosci od obecnosci policji
+avg_time = df.groupby('Police Deployed')['Czas'].mean().dropna().sort_values()
+avg_time.plot(kind='bar', figsize=(10, 5), color='teal')
+plt.title('Średni czas zamknięcia sprawy vs. liczba policjantów')
+plt.ylabel('Średnia liczba dni')
+plt.tight_layout()
 plt.show()
