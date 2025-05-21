@@ -151,3 +151,20 @@ plt.title('Średni czas zamknięcia sprawy vs. liczba policjantów')
 plt.ylabel('Średnia liczba dni')
 plt.tight_layout()
 plt.show()
+
+#najczesciej uzywane bronie wg miast
+weapon_city = pd.crosstab(df['City'], df['Weapon Used'])
+
+top_weapons = df['Weapon Used'].value_counts().head(5).index
+weapon_city_top = weapon_city[top_weapons]
+weapon_city_top['Inne'] = weapon_city.drop(columns=top_weapons).sum(axis=1)
+weapon_city_top = weapon_city_top.loc[weapon_city_top.sum(axis=1).sort_values(ascending=False).head(10).index]
+weapon_city_top.plot(kind='bar', stacked=True, figsize=(14, 7), colormap='tab10')
+plt.title('Rodzaje broni używane w przestępstwach – top 10 miast')
+plt.xlabel('Miasto')
+plt.ylabel('Liczba przypadków')
+plt.legend(title='Rodzaj broni')
+plt.tight_layout()
+plt.show()
+
+
