@@ -240,11 +240,6 @@ Wykres słupkowy skumulowany przedstawia liczbę przypadków użycia różnych t
 - Tego typu analiza może wspierać służby porządkowe w lepszym doborze środków prewencyjnych w zależności od lokalizacji.
 - Miasta o dużej liczbie przypadków z użyciem określonego typu broni mogą wymagać ukierunkowanych działań (np. kontrola nielegalnego posiadania noży).
 
-Zawsze pokazuj szczegóły
-
-Kopiuj
-# Prepare markdown content for the analysis of the heatmap of crime rates by city and year
-markdown_content_heatmap_city_year = """
 # Analiza wykresu: Przestępstwa na 100k mieszkańców – miasta vs lata
 
 ## Opis wykresu:
