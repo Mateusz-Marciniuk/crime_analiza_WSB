@@ -109,14 +109,14 @@ plt.grid(True, axis='y')
 plt.show()
 
 #wykres trendu przestępstw w czasie
-df['YearMonth'] = df['Date of Occurrence'].dt.to_period('M')
-trend = df['YearMonth'].value_counts().sort_index()
+# df['YearMonth'] = df['Date of Occurrence'].dt.to_period('M')
+# trend = df['YearMonth'].value_counts().sort_index()
 
-trend.plot(kind='line', figsize=(12, 5), marker='o', title='Liczba przestępstw w czasie')
-plt.xlabel('Rok-Miesiąc')
-plt.ylabel('Liczba przestępstw')
-plt.tight_layout()
-plt.show()
+# trend.plot(kind='line', figsize=(12, 5), marker='o', title='Liczba przestępstw w czasie')
+# plt.xlabel('Rok-Miesiąc')
+# plt.ylabel('Liczba przestępstw')
+# plt.tight_layout()
+# plt.show()
 
 
 #Mapa cieplna – przestępstwa według miast i lat
