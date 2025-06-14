@@ -1,4 +1,3 @@
-# Import
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
@@ -40,9 +39,13 @@ plt.ylabel('Rodzaj przestępstwa')
 plt.tight_layout()
 plt.show()
 
+
 # Heatmapa: rodzaj przestępstwa vs policja
 ct = pd.crosstab(df['Crime Description'], df['Police Deployed'])
 heat = ct.loc[top_crimes['Typ']]
+
+# Sortowanie kolumn rosnąco
+heat = heat[sorted(heat.columns, key=lambda x: int(x))]
 
 plt.figure(figsize=(12, 6))
 sns.heatmap(heat, annot=True, fmt="d", cmap="YlGnBu")
@@ -138,7 +141,7 @@ plt.show()
 # Stosunek mężczyźni vs kobiety dla każdego przestępstwa
 pivot_gender = pd.crosstab(df['Crime Description'], df['Victim Gender'])
 pivot_gender = pivot_gender.loc[top_crimes['Typ']]
-pivot_gender.plot(kind='barh', stacked=True, figsize=(10, 6), colormap='Pastel1')
+pivot_gender.plot(kind='barh', stacked=True, figsize=(10, 6), colormap='Set2')
 plt.title('Płeć ofiar wg rodzaju przestępstwa')
 plt.xlabel('Liczba ofiar')
 plt.ylabel('Rodzaj przestępstwa')
