@@ -28,11 +28,16 @@ plt.ylabel('Liczba ofiar')
 plt.tight_layout()
 plt.show()
 
-# Top 10 przestępstw (barplot)
+# Top 10 przestępstw (barplot z liczbą wystąpień)
 top_crimes = df['Crime Description'].value_counts().head(10).rename_axis('Typ').reset_index(name='Liczba')
 
 plt.figure(figsize=(10, 6))
-sns.barplot(data=top_crimes, y='Typ', x='Liczba', palette='Blues_d')
+barplot = sns.barplot(data=top_crimes, y='Typ', x='Liczba', palette='Blues_d')
+
+# Dodanie etykiet z liczbą
+for i, row in top_crimes.iterrows():
+    barplot.text(row['Liczba'] + 5, i, str(row['Liczba']), va='center')
+
 plt.title('Top 10 przestępstw')
 plt.xlabel('Liczba przestępstw')
 plt.ylabel('Rodzaj przestępstwa')
